@@ -1,6 +1,14 @@
 {
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts"
+  },
   "dependencies": {
-    "@sentry/node": "^9.2.0",
-    "@sentry/profiling-node": "^9.2.0"
+    "@sentry/node": "9.3.0",
+    "@sentry/profiling-node": "9.3.0"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
   }
 }
