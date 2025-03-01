@@ -1,8 +1,11 @@
 {
   "scripts": {
-    "build": "tsc",
-    "dev": "ts-node src/index.ts"
+    "clean": "rm -rf dist",
+    "check": "tsc",
+    "start": "ts-node server.ts",
+    "test": "node --test"
   },
+  "type": "module",
   "dependencies": {
     "@sentry/node": "9.3.0",
     "@sentry/profiling-node": "9.3.0"
