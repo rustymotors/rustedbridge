@@ -1,9 +1,14 @@
 {
     "compilerOptions": {
       "target": "ES5",
-      "module": "CommonJS",
-      "outDir": "out",
-      "sourceMap": true
+      "module": "NodeNext",
+      "outDir": "dist",
+      "declaration": true,
+      "emitDeclarationOnly": true,
+      "sourceMap": true,
+      "verbatimModuleSyntax": true,
+      "allowImportingTsExtensions": true,
+      "moduleResolution": "nodenext"
     }
   }
   
