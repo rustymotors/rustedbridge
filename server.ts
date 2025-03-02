@@ -1,7 +1,7 @@
 import { createServer } from "node:http";
 import { isMainThread, Worker } from "node:worker_threads";
 import { hashPassword } from "./src/crypto.ts";
-import { isValidUser } from "./src/database.ts";
+import { addUser, isValidUser } from "./src/database.ts";
 
 type AuthLoginRequest = {
   username: string;
@@ -27,7 +27,7 @@ function handleRequest(req, res) {
       return;
     }
 
-    const hashedPassword = hashPassword(password);
+    const hashedPassword = hashPassword(password, 16);
     console.log("Hashed password: ",
       Number.parseInt(hashedPassword, 16).toString(2).padStart(256, "0"));
 
@@ -58,6 +58,26 @@ function startWebserver() {
 let isRunning = false;
 
 if (isMainThread) {
+  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+  if (typeof ADMIN_PASSWORD === "undefined") {
+    console.error("ADMIN_PASSWORD environment variable is not set");
+    process.exit(1);
+  }
+
+  const hashedAdminPassword = hashPassword(process.env.ADMIN_PASSWORD, 16);
+
+  try {
+    addUser('admin', hashedAdminPassword);
+    
+  } catch (error) {
+    if (error.message.includes('UNIQUE constraint failed')) {
+      console.log('Admin user already exists');
+    } else {
+      throw error;
+    }
+    
+  }
+
   console.log("This is the main thread, running at ", import.meta.filename);
   console.log("Starting worker thread...");
   const webWorker = new Worker(import.meta.filename);

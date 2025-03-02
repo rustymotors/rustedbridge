@@ -2,7 +2,7 @@ import { DatabaseSync } from 'node:sqlite';
 import { hashPassword } from './crypto.ts';
 
 const db = new DatabaseSync(':memory:');
-const hashedAdminPassword = hashPassword('admin');
+
 
 db.exec(`
   CREATE TABLE users (
@@ -11,18 +11,11 @@ db.exec(`
   );
 `);
 
-try {
+export function addUser(username: string, password: string): void {
+  const hashedPassword = hashPassword(password, 16);
   db.exec(`
-    INSERT INTO users (name, password) VALUES ('admin', '${hashedAdminPassword}');
+    INSERT INTO users (name, password) VALUES ('${username}', '${hashedPassword}');
   `);
-  
-} catch (error) {
-  if (error.message.includes('UNIQUE constraint failed')) {
-    console.log('Admin user already exists');
-  } else {
-    throw error;
-  }
-  
 }
 
 export function isValidUser(username: string, password: string): boolean {

@@ -2,13 +2,14 @@
   "scripts": {
     "clean": "rm -rf dist",
     "check": "tsc",
-    "start": "ts-node server.ts",
+    "start": "node --import=ts-node/esm --env-file=.env server.ts",
     "test": "node --test"
   },
   "type": "module",
   "dependencies": {
     "@sentry/node": "9.3.0",
-    "@sentry/profiling-node": "9.3.0"
+    "@sentry/profiling-node": "9.3.0",
+    "bcryptjs": "^3.0.2"
   },
   "devDependencies": {
     "ts-node": "^10.9.2",
