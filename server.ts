@@ -20,7 +20,7 @@ function handleRequest(req, res) {
     const username = fullUrl.searchParams.get("username");
     const password = fullUrl.searchParams.get("password");
     console.log("Username: ", username);
-    console.log("Password: ", password);
+    console.log("Password received: [REDACTED]");
     if (typeof username === "undefined" || typeof password === "undefined") {
       res.writeHead(400, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ message: "Invalid request" }));
