@@ -68,14 +68,14 @@ if (isMainThread) {
 
   try {
     addUser('admin', hashedAdminPassword);
-    
+
   } catch (error) {
     if (error.message.includes('UNIQUE constraint failed')) {
       console.log('Admin user already exists');
     } else {
       throw error;
     }
-    
+
   }
 
   console.log("This is the main thread, running at ", import.meta.filename);
